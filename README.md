@@ -51,3 +51,7 @@ use one) as a trusted publisher on the extension's page.
 The source of this action lives in
 [bulwarkmail/extensions-directory](https://github.com/bulwarkmail/extensions-directory/tree/main/action);
 `dist/index.js` is built from it with `npm run build:cli`.
+
+## License
+
+AGPL-3.0-only. Versions up to v1.0.0 were released under MIT.

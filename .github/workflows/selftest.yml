@@ -1,0 +1,27 @@
+name: Self-test against the directory
+
+# Requests a real OIDC token and sends a dry run. No extension trusts this
+# repository, so the directory must accept the token (signature, issuer,
+# audience, lifetime) and then answer that there is no trusted publisher.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - id: publish
+        uses: ./
+        continue-on-error: true
+        with:
+          dry-run: true
+          subpath: selftest
+      - name: The token was accepted and matched against publishers
+        run: |
+          test "${{ steps.publish.outcome }}" = failure
+          echo "Expected refusal: no trusted publisher for this repository."
